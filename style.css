@@ -1,0 +1,422 @@
+body {
+ 	margin: 0;
+ 	padding: 0;
+ 	background: #ece6df;
+}
+
+
+canvas {
+	display: block;
+	cursor: pointer;
+	border-radius:25px;
+}
+
+canvas.noiseScreen {
+	display: block;
+	cursor: auto;
+	border-radius:25px;
+}
+
+
+button {
+	background-color:#f28952;
+	font-family: filson-soft, sans-serif;
+	font-style: normal;
+	font-weight: 700;
+	font-size:14px;
+	height: 100px;
+	width: 100px;
+	border-radius:15px;
+	border:none;
+	cursor:pointer;
+}
+
+button.play {
+	background-color:#f28952;
+	font-family: filson-soft, sans-serif;
+	font-style: normal;
+	font-weight: 700;
+	font-size:14px;
+	height: 50px;
+	width: 100px;
+	border-radius:15px;
+	border:none;
+	cursor:pointer;
+}
+
+input.volume{
+    appearance: none;
+    border-radius: 10px;
+    background-color: #ECE6DF;
+    width: 100px;
+}
+
+
+
+h1{
+	position:absolute;
+	font-family: filson-soft, sans-serif;
+	font-style: normal;
+	font-weight: 700;
+	font-size: 55pt;
+	margin-left: 170px;
+	margin-top: 90px;
+	line-height:0;
+}
+
+h2{
+	position:absolute;
+	font-family: filson-soft, sans-serif;
+	font-style: normal;
+	font-weight: 700;
+	font-size: 18pt;
+	margin-left: 175px;
+	margin-top: 100px;
+	line-height:0;
+}
+
+p{
+	position:absolute;
+	font-family: filson-soft, sans-serif;
+	font-style: normal;
+	font-weight: 700;
+	text-align:right;
+	width:100px;
+	left:165px;
+	top:630px;
+	line-height:59px;
+}
+
+#speaker{
+	position: absolute;
+	height:100px;
+	width: 430px;
+	left:275px;
+	top:221px;
+	background: #ece6df;
+	border-radius:25px;
+
+}
+
+#speaker1, 
+#speaker2, 
+#speaker3, 
+#speaker4, 
+#speaker5, 
+#speaker6, 
+#speaker6, 
+#speaker7, 
+#speaker8, 
+#speaker9, 
+#speaker10, 
+#speaker11, 
+#speaker12, 
+#speaker13, 
+#speaker14, 
+#speaker15, 
+#speaker16,
+#speaker17,
+#speaker18,
+#speaker19,
+#speaker20,
+#speaker21{
+	position: absolute;
+	width: 6px;
+	height: 100px;
+	background: grey;
+	border-radius:25px;
+}
+
+#speaker1{
+	left:298px;
+	top:221px;
+}
+
+#speaker2{
+	left:317px;
+	top:221px;
+}
+
+#speaker3{
+	left:336px;
+	top:221px;
+}
+
+#speaker4{
+	left:355px;
+	top:221px;
+}
+
+#speaker5{
+	left:374px;
+	top:221px;
+}
+
+#speaker6{
+	left:393px;
+	top:221px;
+}
+
+#speaker7{
+	left:412px;
+	top:221px;
+}
+
+#speaker8{
+	left:431px;
+	top:221px;
+}
+
+#speaker9{
+	left:450px;
+	top:221px;
+}
+
+#speaker10{
+	left:469px;
+	top:221px;
+}
+
+#speaker11{
+	left:488px;
+	top:221px;
+}
+
+#speaker12{
+	left:507px;
+	top:221px;
+}
+
+#speaker13{
+	left:526px;
+	top:221px;
+}
+
+#speaker14{
+	left:545px;
+	top:221px;
+}
+
+#speaker15{
+	left:564px;
+	top:221px;
+}
+
+#speaker16{
+	left:583px;
+	top:221px;
+}
+
+#speaker17{
+	left:602px;
+	top:221px;
+}
+
+#speaker18{
+	left:621px;
+	top:221px;
+}
+
+#speaker19{
+	left:640px;
+	top:221px;
+}
+
+#speaker20{
+	left:659px;
+	top:221px;
+}
+
+#speaker21{
+	left:678px;
+	top:221px;
+}
+
+
+
+
+#osc{
+	position:absolute;
+	top: 275px;
+    left: 100px;
+}
+
+#seq{
+	position:absolute;
+	top:495px;
+	left:100px;
+}
+
+#noisename{
+	position:absolute;
+    top: 10px;
+    left: -105px;
+}
+
+#synth{
+	position:absolute;
+	z-index: -1;
+	background:white;
+	width: 1110px;
+	height: 700px;
+	margin-left: 173px;
+	margin-top: 175px;
+	border-radius:25px;
+}
+
+#synthShadow{
+	position:absolute;
+	z-index: -2;
+	background:grey;
+	width: 1110px;
+	height: 700px;
+	margin-left: 185px;
+	margin-top: 187px;
+	border-radius:25px;
+}
+
+#noiseGenerator{
+	display: inherit;
+	position: relative;
+}
+
+#noise{
+	display: inherit;
+	position:relative;
+	z-index: -1;
+	background:white;
+	width: 1110px;
+	height: 700px;
+	margin-left:-12px;
+	margin-top:-12px;
+	border-radius:25px;
+}
+
+#noiseShadow{
+	display: none;
+	position:absolute;
+	z-index: -2;
+	background:grey;
+	width: 1110px;
+	height: 700px;
+	margin-left: 185px;
+	margin-top: 1000px;
+	border-radius:25px;
+}
+
+
+
+#line1, #line2, #line3, #line4{
+	
+	position: absolute;
+	cursor:pointer;
+}
+
+#line1{
+	position: absolute;
+	height: 100vh;
+	background: #f28952;
+	width:50px;
+	left:1480px;
+}
+
+@keyframes plugin {
+  from {height:;}
+  to {height: 175px;}
+}
+
+@keyframes noiseCable {
+  from {left:1480px;}
+  to {left:1290px;}
+}
+
+#cable1{
+	position:absolute;
+	background: #f28952;
+	width:50px;
+	height:0px;
+	top:0px;
+	left:1027px;
+	animation-name: ;
+  	animation-duration: 4s;
+  	animation-iteration-count:infinite;
+}
+
+#cable1con{
+	display:inherit;
+	position:absolute;
+	background: #f28952;
+	width:190px;
+	height:50px;
+	top:100px;
+	left:1117px;
+	animation-name: ;
+  	animation-duration: 4s;
+  	animation-iteration-count:infinite;
+}
+
+#cable2{
+	position:absolute;
+	background: #f4b25c;
+	width:50px;
+	height:0px;
+	top:0px;
+	left:1077px;
+	animation-name: ;
+  	animation-duration: 4s;
+  	animation-iteration-count:infinite;
+
+}
+
+#cable3{
+	position:absolute;
+	background: #f6c869;
+	width:50px;
+	height:0px;
+	top:0px;
+	left:1127px;
+	animation-name: ;
+  	animation-duration: 4s;
+  	animation-iteration-count:infinite;
+
+}
+
+#cable4{
+	position:absolute;
+	background: #f5df6d;
+	width:50px;
+	height:0px;
+	top:0px;
+	left:1177px;
+	animation-name: ;
+  	animation-duration: 4s;
+  	animation-iteration-count:infinite;
+
+}
+
+
+
+#line2{
+	position: absolute;
+	height: 100vh;
+	background: #f4b25c;
+	width:50px;
+	left:1530px;
+}
+
+#line3{
+	position: absolute;
+	height: 100vh;
+	background: #f6c869;
+	width: 50px;
+	left:1580px;
+
+}
+
+#line4{
+	position: absolute;
+	height: 100vh;
+	background: #f5df6d;
+	width: 50px;
+	left:1630px;
+}
