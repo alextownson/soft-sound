@@ -1,4 +1,4 @@
-# Soft Sound V1.0: Browser Synthesizer and Drum Sequencer
+# Soft Sound v1.0: Browser Synthesizer and Drum Sequencer
 
 ![GIF of Soft Sound browser synth and drum sequencer being used.](assets/readme/soft-sound-v1-demo.gif)
 
@@ -48,7 +48,7 @@ After I completed this version of Soft Sound, I decided to make a short motion d
 
 [![Screenshot of the finished video](assets/readme/soft-sound-preview.gif)](https://vimeo.com/559910995)
 
-## Version 2.0
+## v2.0
 
 1. The first change I would like to make is to get rid of the noise generator. The design choices I made for accessing it were not intuitive and I would rather focus on the function and design of the synth and sequencer. While removing this component I will rewrite some of the code to be responsive. I’d like the website to work on a variety of screen sizes. 
 
