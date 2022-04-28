@@ -1,5 +1,6 @@
 # Soft Sound v2.0: Browser Synthesizer and Drum Sequencer
 
+
 ![GIF of Soft Sound browser synth and drum sequencer being used.](assets/readme/soft-sound-v2.0.png)
 
 [Soft Sound](https://alextownson.github.io/soft-sound/) is a browser synthesizer and drum sequencer that I created using HTML, CSS, and P5.js. This is one of the first projects I've created that combines my passion for music, design and web development. 
