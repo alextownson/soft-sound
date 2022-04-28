@@ -17,69 +17,37 @@
 
 <body>
 
-	<div id="line1"></div>
-	<div id="cable1"></div>
-	<div id="line2"></div>
-	<div id="cable2"></div>
-	<div id="line3"></div>
-	<div id="cable3"></div>
-	<div id="line4"></div>
-	<div id="cable4"></div>
-
-
-	<div id="speaker"></div>
-	<div id="speaker1"></div>
-	<div id="speaker2"></div>
-	<div id="speaker3"></div>
-	<div id="speaker4"></div>
-	<div id="speaker5"></div>
-	<div id="speaker6"></div>
-	<div id="speaker7"></div>
-	<div id="speaker8"></div>
-	<div id="speaker9"></div>
-	<div id="speaker10"></div>
-	<div id="speaker11"></div>
-	<div id="speaker12"></div>
-	<div id="speaker13"></div>
-	<div id="speaker14"></div>
-	<div id="speaker15"></div>
-	<div id="speaker16"></div>
-	<div id="speaker17"></div>
-	<div id="speaker18"></div>
-	<div id="speaker19"></div>
-	<div id="speaker20"></div>
-	<div id="speaker21"></div>
-
-
-	<h1>SOFT SOUND</h1>
-
-	<h2 id="osc">OSCILLATOR</h2>
-
-	<h2 id="seq">DRUM SEQUENCER</h2>
-
-
-
-	<div id="synth"></div>
-
-	<div id="synthShadow"></div>
-
-	<div id="noiseShadow">
-
-	<div id="noise">
-	
-	<div id="noiseGenerator">
-		
-		<h2 id="noisename">NOISE</h2>
-		<div id="cable1con"></div>
-
-	</div>	
-
+	<div id="loader">
+		<img id="logoL" src="assets/images/softSoundLogo.png" alt="Soft Sound Logo" width="40%">
 	</div>
 
+	<div id="app">
+		<img id="logoS" src="assets/images/softSoundLogo.png" alt="Soft Sound Logo" width="8%">
+
+		<div id="line1"></div>
+		<div id="line2"></div>
+		<div id="line3"></div>
+		<div id="line4"></div>
+
+		<div id="parent">
+			<h2 id="seq">SEQ</h2>
+			<h2 id="osc">OSC</h2>
+			<h2 id="adsr">ADSR</h2>
+			<h2 id="filter">FILTER</h2>
+			<h2 id="reverb">REVERB</h2>
+			<h2 id="delay">DELAY</h2>
+			<h2 id="bpm">BPM</h2>
+			<h2 id="amp">AMP</h2>
+			<div class="keys">
+				<p id="white">ASDFGHJKL;</p>
+				<p id="black1">WE</p>
+				<p id="black2">TYU</p>
+				<p id="black3">OP</p>
+			</div>
+			<div id="synth">
+			</div>
+		</div>
 	</div>
-
-	<p>HIHAT<br>CLAP<br>KICK</p>
-
 
 	<script src="libraries/p5.js"></script>
 	<script src="libraries/p5.dom.js"></script>

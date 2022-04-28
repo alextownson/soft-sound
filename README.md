@@ -1,6 +1,7 @@
-# Soft Sound v1.0: Browser Synthesizer and Drum Sequencer
+# Soft Sound v2.0: Browser Synthesizer and Drum Sequencer
 
-![GIF of Soft Sound browser synth and drum sequencer being used.](assets/readme/soft-sound-v1-demo.gif)
+
+![GIF of Soft Sound browser synth and drum sequencer being used.](assets/readme/soft-sound-v2.0.png)
 
 [Soft Sound](https://alextownson.github.io/soft-sound/) is a browser synthesizer and drum sequencer that I created using HTML, CSS, and P5.js. This is one of the first projects I've created that combines my passion for music, design and web development. 
 
@@ -14,9 +15,8 @@ The inspiration for the design of the synth came from vintage record players and
 
 [Suzuki TU250X Motorcycle](https://mtrracing.net/Motorcycles-Suzuki-TU250X-2019-Woonsocket-RI-b2c6b4e1-ecee-4cae-b442-a96e00844516)
 
-I wanted to create a retro-esque design because I learned about vintage analog synthesizers to create the controls. Admittedly, Soft Sound's capabilities are quite rudimentary. I chose the font [Filson Soft](https://fonts.adobe.com/fonts/filson) because I wanted something rounded to match the rounded look of the synth.
+I wanted to create a retro-esque design because I learned about vintage analog synthesizers to create the controls. I chose the font [Filson Soft](https://fonts.adobe.com/fonts/filson) because I wanted something rounded to match the rounded look of the synth.
 
-The lines on the side of the site were meant to function like cables that connect to other instruments. Right now the synth can connect to a noise generator. After user testing, I realized that this design is not very intuitive and it will have to be re-designed or removed from the next version of this project.
 
 ## Code
 
@@ -24,11 +24,15 @@ This project began by following a series of tutorials to create the drum sequenc
 
 [![Screenshot of The Audio Programmer YouTube playlist Browser Noise](assets/readme/tutorial.png)](https://www.youtube.com/watch?v=mmluIbsmvoY&list=PLLgJJsrdwhPywJe2TmMzYNKHdIZ3PASbr&ab_channel=TheAudioProgrammer)
 
-By using P5.js Instance Mode, I was able to create two more sketches; the oscillator touch pad and the noise generator. Both of these were created using the [P5.sound reference](https://p5js.org/reference/#/libraries/p5.sound). 
+By using P5.js Instance Mode, I was able to create multiple sketches. In v1.0 of Soft Sound, that included the drum sequencer, an oscillator touch pad, and a noise generator. The oscillator and noise were created using the [P5.sound reference](https://p5js.org/reference/#/libraries/p5.sound). 
+
+![GIF of Soft Sound browser synth and drum sequencer being used.](assets/readme/soft-sound-v1-demo.gif)
+
+In v2.0 of Soft Sound, I have gotten rid of the oscillator touch pad and noise generator. I added a keyboard with touch/key input and sliders for ADSR, a low pass filter, reverb, delay, volume and tempo.  
 
 ## Advertisement
 
-After I completed this version of Soft Sound, I decided to make a short motion design project to advertise the website. 
+After releasing v1.0 of Soft Sound, I decided to make a short motion design project to advertise the website. 
 
 1. First I came up with the logo: 
 
@@ -48,10 +52,6 @@ After I completed this version of Soft Sound, I decided to make a short motion d
 
 [![Screenshot of the finished video](assets/readme/soft-sound-preview.gif)](https://vimeo.com/559910995)
 
-## v2.0
+## v2.1
 
-1. The first change I would like to make is to get rid of the noise generator. The design choices I made for accessing it were not intuitive and I would rather focus on the function and design of the synth and sequencer. While removing this component I will rewrite some of the code to be responsive. I’d like the website to work on a variety of screen sizes. 
-
-2. The second change I would like to make is the addition of a keyboard. The keyboard will be usable via touch and key-presses. The touch pad could then be used to control a different parameter. 
-
-3. The third change I would like to make is to add more controls for the user. I am considering ADSR controls, effects, or possibly some recording capabilities.
+1. v2.0 of Soft Sound works on various desktop screen sizes however a huge oversight of mine was that it does not scale correctly for tablet/mobile. In my next release, I intend to correct the layout so that it can be used on mobile, tablet, and desktop.   
