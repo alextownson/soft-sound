@@ -1,59 +1,51 @@
 <!DOCTYPE html>
-
 <html>
-
-<head>
-
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>SOFT SOUND</title>
-
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" href="https://use.typekit.net/aep4psf.css">
-
-</head>
-
-<body>
-
-	<div id="loader">
-		<img id="logoL" src="assets/images/softSoundLogo.png" alt="Soft Sound Logo" width="40%">
-	</div>
-
-	<div id="app">
-		<img id="logoS" src="assets/images/softSoundLogo.png" alt="Soft Sound Logo" width="8%">
-
-		<div id="line1"></div>
-		<div id="line2"></div>
-		<div id="line3"></div>
-		<div id="line4"></div>
-
-		<div id="parent">
-			<h2 id="seq">SEQ</h2>
-			<h2 id="osc">OSC</h2>
-			<h2 id="adsr">ADSR</h2>
-			<h2 id="filter">FILTER</h2>
-			<h2 id="reverb">REVERB</h2>
-			<h2 id="delay">DELAY</h2>
-			<h2 id="bpm">BPM</h2>
-			<h2 id="amp">AMP</h2>
-			<div class="keys">
-				<p id="white">ASDFGHJKL;</p>
-				<p id="black1">WE</p>
-				<p id="black2">TYU</p>
-				<p id="black3">OP</p>
-			</div>
-			<div id="synth">
-			</div>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Soft Sound</title>
+		<link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" href="https://use.typekit.net/aep4psf.css">
+		<script defer src="libraries/p5.min.js"></script>
+		<script defer src="libraries/p5.sound.min.js"></script>
+		<script defer src="script.js"></script>
+	</head>
+	<body>
+		<div id="loader">
+			<img id="loader-logo" src="assets/images/logo.png" alt="Soft Sound logo" width="40%">
 		</div>
-	</div>
-
-	<script src="libraries/p5.js"></script>
-	<script src="libraries/p5.dom.js"></script>
-	<script src="libraries/p5.sound.js"></script>
-	<script src="script.js"></script>
-
-</body>
-
+		<header>
+			<img id="logo" src="assets/images/logo.png" alt="Soft Sound Logo">
+			<h1>SOFT SOUND</h1>
+		</header>
+		<main id="app">
+			<div id="synth">
+				<div id="controls"></div>
+				<div id="synth-labels">
+					<div id="synth-labels-top">
+						<h2 id="seq">SEQ</h2>
+						<h2 id="bpm">BPM</h2>
+					</div>
+					<div id="synth-labels-bottom"> 
+						<h2 id="osc">OSC</h2>
+						<h2 id="adsr">ADSR</h2>
+						<h2 id="filter">FILTER</h2>
+						<h2 id="reverb">REVERB</h2>
+						<h2 id="delay">DELAY</h2>
+						<h2 id="amp">AMP</h2>
+					</div>
+				</div>
+				<div id="key-labels">
+					<p id="black-keys">
+						<span>WE</span> 
+						<span id="black-keys-middle">TYU</span>
+						<span id="black-keys-end">OP</span>
+					</p>
+					<p id="white-keys">ASDFGHJKL;</p>
+				</div>
+			</div>
+		</main>
+	</body>
 </html>

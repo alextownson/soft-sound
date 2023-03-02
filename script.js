@@ -1,10 +1,148 @@
 setTimeout(function(){ 
-  document.getElementById('app').style['display'] = 'block';
-  document.getElementById('loader').style['display'] = 'none';
+  document.getElementById('loader').style.display = 'none';
 }, 5000);
 
 // Instance mode:
 // https://github.com/processing/p5.js/wiki/Global-and-instance-mode
+
+// To make this sequencer I followed this tutorial series: 
+// https://www.youtube.com/watch?v=mmluIbsmvoY&list=PLLgJJsrdwhPywJe2TmMzYNKHdIZ3PASbr&ab_channel=TheAudioProgrammer
+
+const seqSketch = (sketch) => {
+
+  let hh, clap, bass; // Instrument
+  let hPat, cPat, bPat; // Instrument pattern
+  let hPhrase, cPhrase, bPhrase; // Instrument phrase
+  let drums; // part
+  let bpmSlide;
+  let beatLength;
+  let cellWidth;
+  let cnv;
+  let sPat;
+  let toggleOnOff;
+  let tempo;
+
+  sketch.setup = () => {
+    cnv = sketch.createCanvas(840, 158);
+    cnv.mousePressed(sketch.canvasPressed);
+    cnv.id('sequencer-canvas');
+    beatLength = 16;
+    cellWidth = cnv.width/beatLength;
+    cursorPos = 0;
+    
+    hh = sketch.loadSound('assets/hh_sample.mp3');
+    clap = sketch.loadSound('assets/clap_sample.mp3');
+    bass = sketch.loadSound('assets/bass_sample.mp3');
+    
+    hPat = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    cPat = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
+    bPat = [1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0];
+    sPat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ,13, 14 ,15, 16];
+    
+    hPhrase = new p5.Phrase('hh', (time) => {hh.play(time);}, hPat); 
+    cPhrase = new p5.Phrase('clap', (time) => {clap.play(time);}, cPat); 
+    bPhrase = new p5.Phrase('bass', (time) => {bass.play(time);}, bPat); 
+    
+    drums = new p5.Part();
+    
+    drums.addPhrase(hPhrase); 
+    drums.addPhrase(cPhrase);
+    drums.addPhrase(bPhrase);
+    drums.addPhrase('seq', sketch.sequence, sPat);
+    
+
+    bpmSlide = sketch.createSlider(20, 160, 80, 1).addClass('slider').id('bpm-slider').parent('controls');
+
+    drums.setBPM(80);  
+
+    sketch.drawMatrix();
+
+    toggleOnOff = sketch.createButton('PLAY').id('play').parent('controls').mousePressed(() =>
+      {if (drums.isPlaying){
+        drums.metro.metroTicks = 0;
+        drums.stop();
+        toggleOnOff.style('background-color', '#f5df6d')
+      }else {drums.loop();
+        toggleOnOff.style('background-color', '#f28952');} 
+    });
+  };
+
+
+  sketch.canvasPressed = () => {
+    let rowClicked = sketch.floor(3*sketch.mouseY/cnv.height);
+    let indexClicked = sketch.floor(16*sketch.mouseX/cnv.width);
+      if(rowClicked === 0){
+        hPat[indexClicked] = +!hPat[indexClicked];
+      } else if(rowClicked === 1){
+        cPat[indexClicked] = +!cPat[indexClicked];
+      } else if(rowClicked === 2){
+        bPat[indexClicked] = +!bPat[indexClicked];
+      }
+  
+    sketch.drawMatrix();
+  }
+
+  sketch.drawMatrix = () => {
+
+    tempo = bpmSlide.value();
+    drums.setBPM(tempo);  
+      
+    sketch.background(236, 230, 223);
+    sketch.stroke('gray');
+    sketch.strokeWeight(0.75);
+    sketch.fill(242, 137, 82);
+    for(let i = 1; i < beatLength; i++){
+      sketch.line( i*cellWidth, 0, i*cellWidth, sketch.height);
+    }
+
+    for(let i = 1; i < 3; i++){
+      sketch.line(0, i*sketch.height/3, sketch.width, i*sketch.height/3);
+    }
+
+      
+    for (let i =0; i < beatLength; i++){
+      if(hPat[i] === 1){
+        sketch.ellipse(i*cellWidth + 0.5*cellWidth, sketch.height/6, cellWidth/2.3);
+    }
+      if(cPat[i] === 1){
+        sketch.ellipse(i*cellWidth + 0.5*cellWidth, sketch.height/2, cellWidth/2.3);
+    }
+      if (bPat[i] === 1){
+      sketch.ellipse(i*cellWidth + 0.5*cellWidth, sketch.height*5/6, cellWidth/2.3);
+        }
+      }
+  };
+
+  sketch.sequence = (time, beatIndex) => {
+    setTimeout(() => {
+      sketch.drawMatrix();
+      sketch.drawPlayhead(beatIndex);
+    }, time*1000);
+
+  };
+
+  // Draws the red playhead
+  sketch.drawPlayhead = (beatIndex) => {
+    sketch.noStroke();
+    sketch.fill(255, 0, 0, 30);
+    sketch.rect((beatIndex-1)*cellWidth, 0, cellWidth, sketch.height);
+  };
+
+  // Browser permission for audio to play
+  sketch.touchStarted = () => {
+    if(sketch.getAudioContext().state !== 'running'){
+  sketch.getAudioContext().resume();
+    }
+  };
+
+  // Responsive design
+  sketch.windowResized = () => {
+
+  };
+
+}
+
+let sequencer = new p5(seqSketch, 'synth');
 
 // Keyboard synth:
 const synthSketch = (sketch) => {
@@ -28,36 +166,24 @@ const synthSketch = (sketch) => {
   let vol;
 
   sketch.setup = () => {
-    cnv = sketch.createCanvas(window.innerWidth/1.69, window.innerHeight/4);
-    cnv.mousePressed(sketch.canvasPressed);
-    cnv.addClass('synthCnv');
+    cnv = sketch.createCanvas(994, 236);
+    cnv.id('synth-canvas');
     cellWidth = cnv.width/10;
     white = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     black = [null, 0, 0, null, 0, 0, 0, null, 0, 0];
 
     // Create sliders
-    attackSlide = sketch.createSlider(0, 1.0, 0.1, 0.01).position(window.innerWidth/3.06, window.innerHeight/2.05);
-    attackSlide.addClass('slider');
-    decaySlide = sketch.createSlider(0, 1.0, 0.1, 0.01).position(window.innerWidth/2.81, window.innerHeight/2.05);
-    decaySlide.addClass('slider');
-    sustainSlide = sketch.createSlider(0, 1.0, 0.1, 0.01).position(window.innerWidth/2.60, window.innerHeight/2.05);
-    sustainSlide.addClass('slider');
-    releaseSlide = sketch.createSlider(0, 1.0, 0.1, 0.01).position(window.innerWidth/2.41, window.innerHeight/2.05);
-    releaseSlide.addClass('slider');
-    LPSlide = sketch.createSlider(0, 2500, 2500, 50).position(window.innerWidth/2.055, window.innerHeight/2.05);
-    LPSlide.addClass('slider');
-    LPSlide.id('filterSlide');
-    verbSlide = sketch.createSlider(0, 1, 0, 0.1).position(window.innerWidth/1.7, window.innerHeight/2.05);
-    verbSlide.addClass('slider');
-    verbSlide.id('verbSlide');
-    delSlide = sketch.createSlider(0, 1, 0, 0.1).position(window.innerWidth/1.465, window.innerHeight/2.05);
-    delSlide.addClass('slider');
-    delSlide.id('delSlide');
-    ampSlide = sketch.createSlider(0, 1, 1, 0.1).position(window.innerWidth/1.308, window.innerHeight/2.05);
-    ampSlide.addClass('slider');
+    attackSlide = sketch.createSlider(0, 1.0, 0.1, 0.01).addClass('slider').id('attack-slider').parent('controls');
+    decaySlide = sketch.createSlider(0, 1.0, 0.1, 0.01).addClass('slider').id('decay-slider').parent('controls');
+    sustainSlide = sketch.createSlider(0, 1.0, 0.1, 0.01).addClass('slider').id('sustain-slider').parent('controls');
+    releaseSlide = sketch.createSlider(0, 1.0, 0.1, 0.01).addClass('slider').id('release-slider').parent('controls');
+    LPSlide = sketch.createSlider(0, 2500, 2500, 50).addClass('slider').id('filter-slider').parent('controls');
+    verbSlide = sketch.createSlider(0, 1, 0, 0.1).addClass('slider').id('reverb-slider').parent('controls');
+    delSlide = sketch.createSlider(0, 1, 0, 0.1).addClass('slider').id('delay-slider').parent('controls');
+    ampSlide = sketch.createSlider(0, 1, 1, 0.1).addClass('slider').id('amp-slider').parent('controls');
 
     // Create buttons
-    sineBut = sketch.createButton('SINE').position(window.innerWidth/4.91, window.innerHeight/2.18).style('background-color','#f28952').mousePressed(() =>
+    sineBut = sketch.createButton('SINE').id('sine').parent('controls').style('background-color','#f28952').mousePressed(() =>
         { for (var j = 0; j < 17; j++) {
           osc[j].setType('sine');}
           sineBut.style('background-color', '#f28952')
@@ -66,7 +192,7 @@ const synthSketch = (sketch) => {
           squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
         })
 
-    triBut = sketch.createButton('TRI').position(window.innerWidth/4.91, window.innerHeight/2).mousePressed(() =>
+    triBut = sketch.createButton('TRI').id('triangle').parent('controls').mousePressed(() =>
         { for (var j = 0; j < 17; j++) {
           osc[j].setType('triangle');}
           sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
@@ -75,7 +201,7 @@ const synthSketch = (sketch) => {
           squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
         })
 
-    sawBut = sketch.createButton('SAW').position(window.innerWidth/3.87, window.innerHeight/2.18).mousePressed(() =>
+    sawBut = sketch.createButton('SAW').id('saw').parent('controls').mousePressed(() =>
         { for (var j = 0; j < 17; j++) {
           osc[j].setType('sawtooth');}
           sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
@@ -84,7 +210,7 @@ const synthSketch = (sketch) => {
           squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
         })
 
-    squareBut = sketch.createButton('SQR').position(window.innerWidth/3.87, window.innerHeight/2).mousePressed(() =>
+    squareBut = sketch.createButton('SQR').id('square').parent('controls').mousePressed(() =>
         { for (var j = 0; j < 17; j++) {
           osc[j].setType('square');}
           sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
@@ -178,7 +304,7 @@ const synthSketch = (sketch) => {
   };
 
   // Click/touch functionality for keys
-  sketch.canvasPressed = () => {
+  sketch.mousePressed = () => {
 
     // Detect where the keys have been clicked
     let indexClicked = sketch.floor(40*sketch.mouseX/cnv.width);
@@ -401,167 +527,8 @@ const synthSketch = (sketch) => {
   
   // Reponsive design
   sketch.windowResized = () => {
-    sketch.resizeCanvas(window.innerWidth/1.69, window.innerHeight/4);;
-    sineBut.position(window.innerWidth/4.91, window.innerHeight/2.18);
-    triBut.position(window.innerWidth/4.91, window.innerHeight/2);
-    sawBut.position(window.innerWidth/3.87, window.innerHeight/2.18);
-    squareBut.position(window.innerWidth/3.87, window.innerHeight/2);
-    cellWidth = cnv.width/10;
-    attackSlide.position(window.innerWidth/3.06, window.innerHeight/2.05);
-    decaySlide.position(window.innerWidth/2.81, window.innerHeight/2.05);
-    sustainSlide.position(window.innerWidth/2.60, window.innerHeight/2.05);
-    releaseSlide.position(window.innerWidth/2.41, window.innerHeight/2.05);
-    LPSlide.position(window.innerWidth/2.055, window.innerHeight/2.05);
-    verbSlide.position(window.innerWidth/1.7, window.innerHeight/2.05);
-    delSlide.position(window.innerWidth/1.465, window.innerHeight/2.05);
-    ampSlide.position(window.innerWidth/1.308, window.innerHeight/2.05);
-    sketch.draw();
   }
 
 };
 
-let myp5 = new p5(synthSketch, 'parent');
-
-// To make this sequencer I followed this tutorial series: 
-// https://www.youtube.com/watch?v=mmluIbsmvoY&list=PLLgJJsrdwhPywJe2TmMzYNKHdIZ3PASbr&ab_channel=TheAudioProgrammer
-
-const seqSketch = (sketch2) => {
-
-  let hh, clap, bass; // Instrument
-  let hPat, cPat, bPat; // Instrument pattern
-  let hPhrase, cPhrase, bPhrase; // Instrument phrase
-  let drums; // part
-  let bpmSlide;
-  let beatLength;
-  let cellWidth;
-  let cnv;
-  let sPat;
-  let toggleOnOff;
-  let tempo;
-
-  sketch2.setup = () => {
-    cnv = sketch2.createCanvas(window.innerWidth/2, window.innerHeight/6);
-    cnv.mousePressed(sketch2.canvasPressed);
-    cnv.addClass('seqCnv');
-    beatLength = 16;
-    cellWidth = cnv.width/beatLength;
-    cursorPos = 0;
-    
-    hh = sketch2.loadSound('assets/hh_sample.mp3');
-    clap = sketch2.loadSound('assets/clap_sample.mp3');
-    bass = sketch2.loadSound('assets/bass_sample.mp3');
-    
-    hPat = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-    cPat = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
-    bPat = [1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0];
-    sPat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ,13, 14 ,15, 16];
-    
-    hPhrase = new p5.Phrase('hh', (time) => {hh.play(time);}, hPat); 
-    cPhrase = new p5.Phrase('clap', (time) => {clap.play(time);}, cPat); 
-    bPhrase = new p5.Phrase('bass', (time) => {bass.play(time);}, bPat); 
-    
-    drums = new p5.Part();
-    
-    drums.addPhrase(hPhrase); 
-    drums.addPhrase(cPhrase);
-    drums.addPhrase(bPhrase);
-    drums.addPhrase('seq', sketch2.sequence, sPat);
-    
-
-    bpmSlide = sketch2.createSlider(20, 160, 80, 1).position(window.innerWidth/1.308, window.innerHeight/3.25);
-    bpmSlide.addClass('slider');
-
-    drums.setBPM(80);  
-
-    sketch2.drawMatrix();
-
-    toggleOnOff = sketch2.createButton('PLAY').position(window.innerWidth/4.91, window.innerHeight/3.4).mousePressed(() =>
-      {if (drums.isPlaying){
-        drums.metro.metroTicks = 0;
-        drums.stop();
-        toggleOnOff.style('background-color', '#f5df6d')
-      }else {drums.loop();
-        toggleOnOff.style('background-color', '#f28952');} 
-    });
-  };
-
-
-  sketch2.canvasPressed = () => {
-    let rowClicked = sketch2.floor(3*sketch2.mouseY/cnv.height);
-    let indexClicked = sketch2.floor(16*sketch2.mouseX/cnv.width);
-      if(rowClicked === 0){
-        hPat[indexClicked] = +!hPat[indexClicked];
-      } else if(rowClicked === 1){
-        cPat[indexClicked] = +!cPat[indexClicked];
-      } else if(rowClicked === 2){
-        bPat[indexClicked] = +!bPat[indexClicked];
-      }
-  
-    sketch2.drawMatrix();
-  }
-
-  sketch2.drawMatrix = () => {
-
-    tempo = bpmSlide.value();
-    drums.setBPM(tempo);  
-      
-    sketch2.background(236, 230, 223);
-    sketch2.stroke('gray');
-    sketch2.strokeWeight(0.75);
-    sketch2.fill(242, 137, 82);
-    for(let i = 1; i < beatLength; i++){
-      sketch2.line( i*cellWidth, 0, i*cellWidth, sketch2.height);
-    }
-
-    for(let i = 1; i < 3; i++){
-      sketch2.line(0, i*sketch2.height/3, sketch2.width, i*sketch2.height/3);
-    }
-
-      
-    for (let i =0; i < beatLength; i++){
-      if(hPat[i] === 1){
-        sketch2.ellipse(i*cellWidth + 0.5*cellWidth, sketch2.height/6, cellWidth/2.3);
-    }
-      if(cPat[i] === 1){
-        sketch2.ellipse(i*cellWidth + 0.5*cellWidth, sketch2.height/2, cellWidth/2.3);
-    }
-      if (bPat[i] === 1){
-      sketch2.ellipse(i*cellWidth + 0.5*cellWidth, sketch2.height*5/6, cellWidth/2.3);
-        }
-      }
-  };
-
-  sketch2.sequence = (time, beatIndex) => {
-    setTimeout(() => {
-      sketch2.drawMatrix();
-      sketch2.drawPlayhead(beatIndex);
-    }, time*1000);
-
-  };
-
-  // Draws the red playhead
-  sketch2.drawPlayhead = (beatIndex) => {
-    sketch2.noStroke();
-    sketch2.fill(255, 0, 0, 30);
-    sketch2.rect((beatIndex-1)*cellWidth, 0, cellWidth, sketch2.height);
-  };
-
-  // Browser permission for audio to play
-  sketch2.touchStarted = () => {
-    if(sketch2.getAudioContext().state !== 'running'){
-  sketch2.getAudioContext().resume();
-    }
-  };
-
-  // Responsive design
-  sketch2.windowResized = () => {
-    sketch2.resizeCanvas(window.innerWidth/2, window.innerHeight/6);
-    cellWidth = cnv.width/beatLength;
-    toggleOnOff.position(window.innerWidth/4.91, window.innerHeight/3.4)
-    bpmSlide.position(window.innerWidth/1.308, window.innerHeight/3.25);
-    sketch2.drawMatrix();
-  };
-
-}
-
-let myp5d = new p5(seqSketch, 'parent');
+let keyboard = new p5(synthSketch, 'synth');
