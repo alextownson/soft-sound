@@ -26,12 +26,21 @@ const keySketch = (sketch) => {
     sketch.preload = () => {
       width = 994;
       height = 236;
-      if (window.innerWidth < 703 && window.innerHeight > 1134){
+      if (window.innerWidth <= 710 && window.innerHeight >= 1140) { 
         width = window.innerWidth * 1.4;
         height = window.innerWidth * 0.53 - 139;
-      } else if (window.innerWidth < 1134 && window.innerHeight < 1134) {
+      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
         width = 772;
         height = 178;
+      } else if (window.innerWidth <= 558 && window.innerHeight <= 1140 && window.innerHeight >= 840) {
+        width = window.innerWidth * 1.4;
+        height = window.innerWidth * 0.57 - 139;
+      } else if (window.innerWidth <= 890 && window.innerWidth >= 416 && window.innerHeight <= 840 || window.innerHeight <= 558) {
+        width = 592;
+        height = 100;
+      } else if (window.innerWidth <= 416 && window.innerHeight <= 890) {
+        width = window.innerWidth * 1.4;
+        height = window.innerWidth * 0.6 - 139;
       }
       cellWidth = width/10;
     }
@@ -179,10 +188,10 @@ const keySketch = (sketch) => {
   
       // Detect where the keys have been clicked
       
-      if (window.innerWidth > 1133){
+      if (window.innerWidth > window.innerHeight){
         rowClicked = sketch.floor(2 * sketch.mouseY / height);
         indexClicked = sketch.floor(40 * sketch.mouseX/ width);
-      } else if (window.innerWidth < 1132) {
+      } else if (window.innerWidth < window.innerHeight) {
         rowClicked = sketch.floor(2 * sketch.mouseX / height);
         indexClicked = sketch.floor(-40 * (sketch.mouseY - width) / width);
       }
@@ -404,18 +413,24 @@ const keySketch = (sketch) => {
     
     // Responsive design
     sketch.windowResized = () => {
-      if (window.innerWidth > 1134) {
+      if (window.innerWidth >= 1134 && window.innerHeight >= 710) {
         width = 994;
         height = 236;
-      } else if (window.innerWidth > 704 && window.innerHeight > 1134) {
-        width = 994;
-        height = 236;
-      } else if (window.innerWidth < 703 && window.innerHeight > 1134){
+      } else if (window.innerWidth <= 710 && window.innerHeight >= 1140) { 
         width = window.innerWidth * 1.4;
         height = window.innerWidth * 0.53 - 139;
-      } else if (window.innerWidth < 1134 && window.innerHeight < 1134) {
+      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
         width = 772;
         height = 178;
+      } else if (window.innerWidth <= 558 && window.innerHeight <= 1140 && window.innerHeight >= 840) {
+        width = window.innerWidth * 1.4;
+        height = window.innerWidth * 0.57 - 139;
+      } else if (window.innerWidth <= 890 && window.innerWidth >= 416 && window.innerHeight <= 840 || window.innerHeight <= 558) {
+        width = 592;
+        height = 100;
+      } else if (window.innerWidth <= 416 && window.innerHeight <= 890) {
+        width = window.innerWidth * 1.4;
+        height = window.innerWidth * 0.6 - 139;
       }
       cellWidth = width/10;
       sketch.resizeCanvas(width, height);

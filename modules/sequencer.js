@@ -22,12 +22,22 @@ const seqSketch = (sketch) => {
   sketch.preload = () => {
       width = 840;
       height = 158;
-    if (window.innerWidth < 703 && window.innerHeight > 1134) { 
-      width = window.innerWidth * 1.2;
-      height = window.innerWidth * 0.33 - 73;
-    } else if (window.innerWidth < 1134 && window.innerHeight < 1134) {
-      width = 637;
-      height = 127
+      if (window.innerWidth <= 710 && window.innerHeight >= 1140) { 
+        width = window.innerWidth * 1.14;
+        height = window.innerWidth * 0.33 - 73;
+      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
+        width = 637;
+        height = 127;
+        console.log('this one')
+      } else if (window.innerWidth <= 558 && window.innerHeight <= 1140 && window.innerHeight >= 840) {
+        width = window.innerWidth * 1.14;
+        height = window.innerWidth * 0.36 - 73;
+      } else if (window.innerWidth <= 890 && window.innerWidth >= 416 && window.innerHeight <= 840 || window.innerHeight <= 558) {
+        width = 460;
+        height = 90;
+      } else if (window.innerWidth <= 416 && window.innerHeight <= 890) {
+        width = window.innerWidth * 1.02;
+        height = window.innerWidth * 0.39 - 73;
     }
     cellWidth = width / beatLength;
   }
@@ -76,10 +86,10 @@ const seqSketch = (sketch) => {
 
 
   sketch.canvasPressed = () => {
-    if (window.innerWidth > 1133){
+    if (window.innerWidth > window.innerHeight){
       rowClicked = sketch.floor(3 * sketch.mouseY / height);
       indexClicked = sketch.floor(beatLength * sketch.mouseX / width);
-    } else if (window.innerWidth < 1132) {
+    } else if (window.innerWidth < window.innerHeight) {
       rowClicked = sketch.floor(3 * sketch.mouseX / height);
       indexClicked = sketch.floor(-beatLength * (sketch.mouseY - width) / width);
     }
@@ -149,19 +159,26 @@ const seqSketch = (sketch) => {
 
   // Responsive design
   sketch.windowResized = () => {
-    if (window.innerWidth > 1134) {
+    if (window.innerWidth >= 1134 && window.innerHeight >= 710) {
       width = 840;
       height = 158;
-    } else if (window.innerWidth > 704 && window.innerHeight > 1134) {
-      width = 840;
-      height = 158;
-    } else if (window.innerWidth < 703 && window.innerHeight > 1134) {
-      width = window.innerWidth * 1.2;
+    } else if (window.innerWidth <= 710 && window.innerHeight >= 1140) { 
+      width = window.innerWidth * 1.14;
       height = window.innerWidth * 0.33 - 73;
-    } else if (window.innerWidth < 1134 && window.innerHeight < 1134) {
+    } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
       width = 637;
-      height = 127
-    } 
+      height = 127;
+      console.log('this one')
+    } else if (window.innerWidth <= 558 && window.innerHeight <= 1140 && window.innerHeight >= 840) {
+      width = window.innerWidth * 1.14;
+      height = window.innerWidth * 0.36 - 73;
+    } else if (window.innerWidth <= 890 && window.innerWidth >= 416 && window.innerHeight <= 840 || window.innerHeight <= 558) {
+      width = 460;
+      height = 90;
+    } else if (window.innerWidth <= 416 && window.innerHeight <= 890) {
+      width = window.innerWidth * 1.02;
+      height = window.innerWidth * 0.39 - 73;
+  }
     cellWidth = width / beatLength;
     sketch.resizeCanvas(width, height);
     sketch.drawSeq();
