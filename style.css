@@ -5,32 +5,22 @@
 }
 
 body{
-	overflow: hidden;
 	background-color: #ece6df;
 	font-family: filson-soft, sans-serif;
 	font-size: 16px;
 }
 
-header {
-	position: absolute;
-	display: flex;
-	flex-flow: row wrap;
-	align-items: center;
-	padding: 15px 15px;
-	gap: 25px;
-}
-
-h1, h2 {
+h2 {
 	font-size: 1em;
 }
 
-#logo{ 
-	width: 50px;
+p {
+	display: inline-block;
 }
 
 #loader {
 	position: absolute;
-	z-index: 3;
+	z-index: 4;
 	width: 100vw;
 	height: 100vh;
 	background-color: #ece6df;
@@ -41,6 +31,8 @@ h1, h2 {
 }
 
 #loader-logo{
+	max-width: 500px;
+	width: 70%;
 	animation-name: loader;
 	animation-duration: 2s;
 	animation-delay: 1s;
@@ -56,40 +48,41 @@ h1, h2 {
 	display: flex;
 	height: 100vh;
 	min-height: 683px;
-	width: 100vw;
+	width: 100%;
 	flex-flow: column nowrap;
 	align-items: center;
 	justify-content: center;
-	padding: 20px;
 }
 
 #synth{
 	display: flex;
 	background:white;
 	width: 1093px;
-	height: 663px;
+	min-height: 663px;
 	border: solid grey 0.01px;
 	border-radius:25px;
 	flex-flow: column nowrap;
 	align-items: center;
 	justify-content: space-between;
+	padding: 32px 0 24px;
 }
 
 canvas {
+	/* display: none; */
 	position: relative;
 	z-index: 2;
 	cursor: pointer;
 	border-radius:5px;
 	border: solid grey 0.01px;
 }
-
+/* 
 #sequencer-canvas{
-	margin-top: 73px;
+	margin-top: 8.5%;
 }
 
 #synth-canvas{
-	margin-bottom: 42px;
-}
+	margin-bottom: 3%;
+} */
 
 #controls {
 	position: absolute;
@@ -103,34 +96,21 @@ canvas {
 */
 
 #play {
-	position: relative;
-	top: 20.2%;
-	left: -2.2%;
+	position: absolute;
+	top: 9.3%;
+	left: 4.5%;
 }
 
-#sine {
-	position: relative;
-	top: 44.2%;
-	left: -61.1%;
+#osc-buttons {
+	position: absolute;
+	top: 36.5%;
+	left: 4.5%;
+	width: 150px;
+	display: flex;
+	flex-flow: row wrap;
+	gap: 5px;
 }
 
-#triangle {
-	position: relative;
-	top: 50%;
-	left: -66.6%;
-}
-
-#saw {
-	position: relative;
-	top: 44.2%;
-	left: -65.3%;
-}
-
-#square {
-	position: relative;
-	top: 50%;
-	left: -70.8%;
-}
 
 button {
 	background-color: rgb(245, 223, 109);
@@ -153,68 +133,68 @@ button:hover {
 */
 
 #bpm-slider {
-	position: relative;
-	top: 22%;
-	left: 89.9%;
+	position: absolute;
+	top: 15%;
+	right: 3.3%;
 }
 
 #attack-slider {
-	position: relative;
-	top: 46.7%;
-	left: 10.5%;
+	position: absolute;
+	top: 41.8%;
+	left: 22.6%;
 }
 
 #decay-slider {
-	position: relative;
-	top: 46.7%;
-	left: 7.6%;
+	position: absolute;
+	top: 41.8%;
+	left: 26%;
 }
 
 #sustain-slider {
-	position: relative;
-	top: 46.7%;
-	left: 4.6%;
+	position: absolute;
+	top: 41.8%;
+	left: 29.4%;
 }
 
 #release-slider {
-	position: relative;
-	top: 46.7%;
-	left: 1.6%;
+	position: absolute;
+	top: 41.8%;
+	left: 32.8%;
 }
 
 #filter-slider {
-	position: relative;
+	position: absolute;
 	transform: rotate(0deg);
-	top: 46.7%;
-	left: 8.5%;
+	top: 41.8%;
+	right: 45.9%;
 }
 
 #reverb-slider {
-	position: relative;
+	position: absolute;
 	transform: rotate(0deg);
-	top: 46.7%;
-	left: 17.5%;
+	top: 41.8%;
+	right: 30.1%;
 }
 
 #delay-slider {
-	position: relative;
+	position: absolute;
 	transform: rotate(0deg);
-	top: 46.7%;
-	left: 25.3%;
+	top: 41.8%;
+	right: 15.6%;
 }
 
 #amp-slider {
-	position: relative;
-	top: 46.7%;
-	left: 31%;
+	position: absolute;
+	top: 41.8%;
+	right: 3.3%;
 }
 
 .slider {
 	-webkit-appearance: none;
 	appearance: none;
 	transform: rotate(-90deg);
-	height: 0.5%;
-	width: 6.7%;
+	height: 7px;
+	width: 72px;
 	background: #ece6df; 
 	border-style:solid;
 	border-width: 1px;
@@ -255,69 +235,67 @@ button:hover {
 
 #synth-labels {
 	position: absolute;
-	z-index:2;
+	z-index: 2;
 	width: 1093px;
 	height: 663px;
 	font-size: 1em;
 	pointer-events: none;
 }
 
-#synth-labels-top {
-	position: relative;
-	top: 13.3%;
-}
-
 #seq{
-	display: inline-block;
-	position: relative;
+	display: inline;
+	position: absolute;
+	top: 2.5%;
     left: 5.6%;
 }
 
 #bpm{
-	display: inline-block;
-	position: relative;
-    left: 88.3%;
-}
-
-#synth-labels-bottom {
-	position: relative;
-	top: 35%;
+	display: inline;
+	position: absolute;
+	top: 2.5%;	
+    right: 5%;
 }
 
 #osc{
 	display: inline-block;
-	position: relative;
+	position: absolute;
+	top: 31%;
     left: 5.6%;
 }
 
 #adsr {
 	display: inline-block;
-	position: relative;
-    left: 22.3%;
+	position: absolute;
+	top: 31%;
+    left: 25.9%;
 }
 
 #filter {
 	display: inline-block;
-	position: relative;
-    left: 40.4%;
+	position: absolute;
+	top: 31%;
+    right: 46.8%;
 }
 
 #reverb {
 	display: inline-block;
-	position: relative;
-    left: 50.3%;	
+	position: absolute;
+	top: 31%;
+    right: 30.7%;	
 }
 
 #delay{
 	display: inline-block;
-	position: relative;
-    left: 59.1%;	
+	position: absolute;
+	top: 31%;
+    right: 16.6%;	
 }
 
 #amp{
 	display: inline-block;
-	position: relative;
-    left: 67.3%;
+	position: absolute;
+	top: 31%;
+    right: 4.9%;
 }
 
 /* 
@@ -326,20 +304,28 @@ button:hover {
 
 #key-labels{
 	position: absolute;
-	display:block;
-	z-index:2;
+	display: block;
+	z-index: 3;
 	width: 1093px;
 	height: 663px;
-	/* font-size: 1em; */
 	pointer-events: none;
 }
 
 #white-keys{
-	display: inline-block;
 	position: relative;
-	top: 79.5%;
-	left: 8.5%;
-	letter-spacing: 5.56em;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	gap: 89px;
+}
+
+#white-keys > p {
+	position: relative;
+	top: 80%;
+	height: fit-content;
 }
 
 #black-keys{
@@ -356,4 +342,79 @@ button:hover {
 
 #black-keys-end {
 	margin-left: 0.5em;
+}
+
+
+/* 
+	LARGE SCREENS
+*/
+
+@media only screen and (max-width: 1133px) and (min-height: 1134px) {
+	#app {
+		transform: rotate(-90deg);
+		min-height: 0;
+	}
+	header {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 703px) and (min-height: 1133px) {
+	#app {
+		transform: rotate(-90deg);
+		min-height: 0;
+	}
+	header {
+		display: none;
+	}
+
+	#key-labels {
+		display: none;
+	}
+
+	#synth,
+	#controls,
+	#synth-labels{
+		min-height: 0px;
+		height: calc(100vw - 40px);
+		width: calc(100vw * 1.61 - 40px);
+	}
+
+	#osc,
+	#adsr,
+	#filter,
+	#reverb,
+	#delay,
+	#amp {
+		top: 28%;
+	}
+	#play {
+		top: 10.2%;
+		left: 2.2%;
+	}
+}
+
+/* 
+	OTHER SCREENS
+*/
+
+@media only screen and (max-width: 1133px) and (max-height: 1133px) {
+	header {
+		display: none;
+	}
+	#app {
+		transform: rotate(-90deg);
+		min-height: 890px;
+		min-width: 562px;
+	}
+	#synth,
+	#controls,
+	#synth-labels {
+		min-height: 0px;
+		width: 850px;
+		height: 531.25px;
+	}
+	#key-labels {
+		display: none;
+	}
 }

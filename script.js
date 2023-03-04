@@ -15,19 +15,34 @@ const seqSketch = (sketch) => {
   let hPhrase, cPhrase, bPhrase; // Instrument phrase
   let drums; // part
   let bpmSlide;
-  let beatLength;
-  let cellWidth;
   let cnv;
   let sPat;
   let toggleOnOff;
   let tempo;
+  let width;
+  let height;
+  let beatLength = 16;
+  let cellWidth = width / beatLength;
+  let rowClicked;
+  let indexClicked
+
+  sketch.preload = () => {
+      width = 840;
+      height = 158;
+    if (window.innerWidth < 703 && window.innerHeight > 1134) { 
+      width = window.innerWidth * 1.2;
+      height = window.innerWidth * 0.33 - 73;
+    } else if (window.innerWidth < 1134 && window.innerHeight < 1134) {
+      width = 637;
+      height = 127
+    }
+    cellWidth = width / beatLength;
+  }
 
   sketch.setup = () => {
-    cnv = sketch.createCanvas(840, 158);
+    cnv = sketch.createCanvas(width, height);
     cnv.mousePressed(sketch.canvasPressed);
     cnv.id('sequencer-canvas');
-    beatLength = 16;
-    cellWidth = cnv.width/beatLength;
     cursorPos = 0;
     
     hh = sketch.loadSound('assets/hh_sample.mp3');
@@ -55,7 +70,7 @@ const seqSketch = (sketch) => {
 
     drums.setBPM(80);  
 
-    sketch.drawMatrix();
+    sketch.drawSeq();
 
     toggleOnOff = sketch.createButton('PLAY').id('play').parent('controls').mousePressed(() =>
       {if (drums.isPlaying){
@@ -69,8 +84,14 @@ const seqSketch = (sketch) => {
 
 
   sketch.canvasPressed = () => {
-    let rowClicked = sketch.floor(3*sketch.mouseY/cnv.height);
-    let indexClicked = sketch.floor(16*sketch.mouseX/cnv.width);
+    if (window.innerWidth > 1133){
+      rowClicked = sketch.floor(3 * sketch.mouseY / height);
+      indexClicked = sketch.floor(beatLength * sketch.mouseX / width);
+    } else if (window.innerWidth < 1132) {
+      rowClicked = sketch.floor(3 * sketch.mouseX / height);
+      indexClicked = sketch.floor(-beatLength * (sketch.mouseY - width) / width);
+    }
+
       if(rowClicked === 0){
         hPat[indexClicked] = +!hPat[indexClicked];
       } else if(rowClicked === 1){
@@ -79,11 +100,10 @@ const seqSketch = (sketch) => {
         bPat[indexClicked] = +!bPat[indexClicked];
       }
   
-    sketch.drawMatrix();
+    sketch.drawSeq();
   }
 
-  sketch.drawMatrix = () => {
-
+  sketch.drawSeq = () => {
     tempo = bpmSlide.value();
     drums.setBPM(tempo);  
       
@@ -92,30 +112,30 @@ const seqSketch = (sketch) => {
     sketch.strokeWeight(0.75);
     sketch.fill(242, 137, 82);
     for(let i = 1; i < beatLength; i++){
-      sketch.line( i*cellWidth, 0, i*cellWidth, sketch.height);
+      sketch.line( i * cellWidth, 0, i * cellWidth, height);
     }
 
     for(let i = 1; i < 3; i++){
-      sketch.line(0, i*sketch.height/3, sketch.width, i*sketch.height/3);
+      sketch.line(0, i * height / 3, width, i * height / 3);
     }
 
       
     for (let i =0; i < beatLength; i++){
       if(hPat[i] === 1){
-        sketch.ellipse(i*cellWidth + 0.5*cellWidth, sketch.height/6, cellWidth/2.3);
+        sketch.ellipse(i * cellWidth + 0.5 * cellWidth, height / 6, cellWidth / 2.3);
     }
       if(cPat[i] === 1){
-        sketch.ellipse(i*cellWidth + 0.5*cellWidth, sketch.height/2, cellWidth/2.3);
+        sketch.ellipse(i * cellWidth + 0.5 * cellWidth, height / 2, cellWidth / 2.3);
     }
       if (bPat[i] === 1){
-      sketch.ellipse(i*cellWidth + 0.5*cellWidth, sketch.height*5/6, cellWidth/2.3);
+      sketch.ellipse(i * cellWidth + 0.5 * cellWidth, height * 5 / 6, cellWidth / 2.3);
         }
       }
   };
 
   sketch.sequence = (time, beatIndex) => {
     setTimeout(() => {
-      sketch.drawMatrix();
+      sketch.drawSeq();
       sketch.drawPlayhead(beatIndex);
     }, time*1000);
 
@@ -125,7 +145,7 @@ const seqSketch = (sketch) => {
   sketch.drawPlayhead = (beatIndex) => {
     sketch.noStroke();
     sketch.fill(255, 0, 0, 30);
-    sketch.rect((beatIndex-1)*cellWidth, 0, cellWidth, sketch.height);
+    sketch.rect((beatIndex - 1) * cellWidth, 0, cellWidth, height);
   };
 
   // Browser permission for audio to play
@@ -137,21 +157,34 @@ const seqSketch = (sketch) => {
 
   // Responsive design
   sketch.windowResized = () => {
-
-  };
-
+    if (window.innerWidth > 1134) {
+      width = 840;
+      height = 158;
+    } else if (window.innerWidth > 704 && window.innerHeight > 1134) {
+      width = 840;
+      height = 158;
+    } else if (window.innerWidth < 703 && window.innerHeight > 1134) {
+      width = window.innerWidth * 1.2;
+      height = window.innerWidth * 0.33 - 73;
+    } else if (window.innerWidth < 1134 && window.innerHeight < 1134) {
+      width = 637;
+      height = 127
+    } 
+    cellWidth = width / beatLength;
+    sketch.resizeCanvas(width, height);
+    sketch.drawSeq();
+  }
 }
 
-let sequencer = new p5(seqSketch, 'synth');
+let sequencer = new p5(seqSketch, 'sequencer-container');
 
 // Keyboard synth:
-const synthSketch = (sketch) => {
+const keySketch = (sketch) => {
 
   let cnv;
   let sineBut, triBut, sawBut, squareBut;
   let attackSlide, decaySlide, sustainSlide, releaseSlide, LPSlide, verbSlide, delSlide, ampSlide;
   let attack, decay, sustain, release;
-  let cellWidth;
   let osc = [];
   let env = [];
   let verb = [];
@@ -164,11 +197,29 @@ const synthSketch = (sketch) => {
   let verbWet;
   let delWet;
   let vol;
+  let width;
+  let height;
+  let cellWidth = width/10;
+  let rowClicked;
+  let indexClicked;
+
+  sketch.preload = () => {
+    width = 994;
+    height = 236;
+    if (window.innerWidth < 703 && window.innerHeight > 1134){
+      width = window.innerWidth * 1.4;
+      height = window.innerWidth * 0.53 - 139;
+    } else if (window.innerWidth < 1134 && window.innerHeight < 1134) {
+      width = 772;
+      height = 178;
+    }
+    cellWidth = width/10;
+  }
 
   sketch.setup = () => {
-    cnv = sketch.createCanvas(994, 236);
+    cnv = sketch.createCanvas(width, height);
     cnv.id('synth-canvas');
-    cellWidth = cnv.width/10;
+
     white = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     black = [null, 0, 0, null, 0, 0, 0, null, 0, 0];
 
@@ -183,7 +234,7 @@ const synthSketch = (sketch) => {
     ampSlide = sketch.createSlider(0, 1, 1, 0.1).addClass('slider').id('amp-slider').parent('controls');
 
     // Create buttons
-    sineBut = sketch.createButton('SINE').id('sine').parent('controls').style('background-color','#f28952').mousePressed(() =>
+    sineBut = sketch.createButton('SINE').id('sine').parent('osc-buttons').style('background-color','#f28952').mousePressed(() =>
         { for (var j = 0; j < 17; j++) {
           osc[j].setType('sine');}
           sineBut.style('background-color', '#f28952')
@@ -192,7 +243,7 @@ const synthSketch = (sketch) => {
           squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
         })
 
-    triBut = sketch.createButton('TRI').id('triangle').parent('controls').mousePressed(() =>
+    triBut = sketch.createButton('TRI').id('triangle').parent('osc-buttons').mousePressed(() =>
         { for (var j = 0; j < 17; j++) {
           osc[j].setType('triangle');}
           sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
@@ -201,7 +252,7 @@ const synthSketch = (sketch) => {
           squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
         })
 
-    sawBut = sketch.createButton('SAW').id('saw').parent('controls').mousePressed(() =>
+    sawBut = sketch.createButton('SAW').id('saw').parent('osc-buttons').mousePressed(() =>
         { for (var j = 0; j < 17; j++) {
           osc[j].setType('sawtooth');}
           sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
@@ -210,7 +261,7 @@ const synthSketch = (sketch) => {
           squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
         })
 
-    squareBut = sketch.createButton('SQR').id('square').parent('controls').mousePressed(() =>
+    squareBut = sketch.createButton('SQR').id('square').parent('osc-buttons').mousePressed(() =>
         { for (var j = 0; j < 17; j++) {
           osc[j].setType('square');}
           sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
@@ -307,8 +358,14 @@ const synthSketch = (sketch) => {
   sketch.mousePressed = () => {
 
     // Detect where the keys have been clicked
-    let indexClicked = sketch.floor(40*sketch.mouseX/cnv.width);
-    let rowClicked = sketch.floor(2*sketch.mouseY/cnv.height);;
+    
+    if (window.innerWidth > 1133){
+      rowClicked = sketch.floor(2 * sketch.mouseY / height);
+      indexClicked = sketch.floor(40 * sketch.mouseX/ width);
+    } else if (window.innerWidth < 1132) {
+      rowClicked = sketch.floor(2 * sketch.mouseX / height);
+      indexClicked = sketch.floor(-40 * (sketch.mouseY - width) / width);
+    }
 
     // Play osc and change colour; dependant on location of click
     if(indexClicked >=0 && indexClicked <=3 && rowClicked === 1 || indexClicked >=1 && indexClicked <=2 && rowClicked === 0){
@@ -525,10 +582,26 @@ const synthSketch = (sketch) => {
     }
   };
   
-  // Reponsive design
+  // Responsive design
   sketch.windowResized = () => {
+    if (window.innerWidth > 1134) {
+      width = 994;
+      height = 236;
+    } else if (window.innerWidth > 704 && window.innerHeight > 1134) {
+      width = 994;
+      height = 236;
+    } else if (window.innerWidth < 703 && window.innerHeight > 1134){
+      width = window.innerWidth * 1.4;
+      height = window.innerWidth * 0.53 - 139;
+    } else if (window.innerWidth < 1134 && window.innerHeight < 1134) {
+      width = 772;
+      height = 178;
+    }
+    cellWidth = width/10;
+    sketch.resizeCanvas(width, height);
+    sketch.draw;
   }
 
 };
 
-let keyboard = new p5(synthSketch, 'synth');
+let keyboard = new p5(keySketch, 'keyboard-container');
