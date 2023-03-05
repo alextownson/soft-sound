@@ -25,10 +25,9 @@ const seqSketch = (sketch) => {
       if (window.innerWidth <= 710 && window.innerHeight >= 1140) { 
         width = window.innerWidth * 1.14;
         height = window.innerWidth * 0.33 - 73;
-      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
+      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 && window.innerHeight >= 558 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
         width = 637;
         height = 127;
-        console.log('this one')
       } else if (window.innerWidth <= 558 && window.innerHeight <= 1140 && window.innerHeight >= 840) {
         width = window.innerWidth * 1.14;
         height = window.innerWidth * 0.36 - 73;
@@ -151,11 +150,11 @@ const seqSketch = (sketch) => {
   };
 
   // Browser permission for audio to play
-  sketch.touchStarted = () => {
-    if(sketch.getAudioContext().state !== 'running'){
-  sketch.getAudioContext().resume();
-    }
-  };
+  // sketch.touchStarted = () => {
+  //   if(sketch.getAudioContext().state !== 'running'){
+  // sketch.getAudioContext().resume();
+  //   }
+  // };
 
   // Responsive design
   sketch.windowResized = () => {
@@ -165,10 +164,9 @@ const seqSketch = (sketch) => {
     } else if (window.innerWidth <= 710 && window.innerHeight >= 1140) { 
       width = window.innerWidth * 1.14;
       height = window.innerWidth * 0.33 - 73;
-    } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
+    } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 && window.innerHeight >= 558 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
       width = 637;
       height = 127;
-      console.log('this one')
     } else if (window.innerWidth <= 558 && window.innerHeight <= 1140 && window.innerHeight >= 840) {
       width = window.innerWidth * 1.14;
       height = window.innerWidth * 0.36 - 73;

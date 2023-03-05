@@ -29,7 +29,7 @@ const keySketch = (sketch) => {
       if (window.innerWidth <= 710 && window.innerHeight >= 1140) { 
         width = window.innerWidth * 1.4;
         height = window.innerWidth * 0.53 - 139;
-      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
+      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 && window.innerHeight >= 558 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
         width = 772;
         height = 178;
       } else if (window.innerWidth <= 558 && window.innerHeight <= 1140 && window.innerHeight >= 840) {
@@ -419,7 +419,7 @@ const keySketch = (sketch) => {
       } else if (window.innerWidth <= 710 && window.innerHeight >= 1140) { 
         width = window.innerWidth * 1.4;
         height = window.innerWidth * 0.53 - 139;
-      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
+      } else if (window.innerWidth <= 1140 && window.innerWidth >= 890 && window.innerHeight <= 1140 && window.innerHeight >= 558 || window.innerHeight <= 710 && window.innerHeight >= 558 && window.innerWidth >= 890) {
         width = 772;
         height = 178;
       } else if (window.innerWidth <= 558 && window.innerHeight <= 1140 && window.innerHeight >= 840) {
