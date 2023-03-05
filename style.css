@@ -33,7 +33,7 @@ p {
 
 #loader-logo{
 	max-width: 500px;
-	width: 70%;
+	width: 60%;
 	animation-name: loader;
 	animation-duration: 2s;
 	animation-delay: 1s;
