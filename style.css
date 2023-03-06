@@ -134,7 +134,6 @@ button:hover {
 /* 
 	SLIDERS
 */
-
 #bpm-slider {
 	position: absolute;
 	top: 21%;
@@ -246,6 +245,10 @@ button:hover {
 	pointer-events: none;
 }
 
+label {
+	font-weight: 700;
+}
+
 #seq{
 	display: inline;
 	position: absolute;
@@ -271,7 +274,7 @@ button:hover {
 	display: inline-block;
 	position: absolute;
 	top: 37%;
-    left: 25.9%;
+    left: 25.7%;
 }
 
 #filter {
@@ -368,6 +371,17 @@ button:hover {
 	#key-labels {
 		display: none;
 	}
+	#adsr {
+		left: 26.9%;
+	}
+	#osc,
+	#adsr,
+	#filter,
+	#reverb,
+	#delay,
+	#amp {
+		top: 34%;
+	}
 	#synth,
 	#controls,
 	#synth-labels{
@@ -387,6 +401,9 @@ button:hover {
 	}
 	#key-labels {
 		display: none;
+	}
+	#adsr {
+		left: 26.5%;
 	}
 	#synth,
 	#controls,
@@ -429,6 +446,9 @@ button:hover {
 		width: 650px;
 		height: 396px;
 	}
+	#adsr {
+		left: 27.5%;
+	}
 	#bpm-slider {
 		top: 23%;
 	}
@@ -458,6 +478,9 @@ button:hover {
 		min-height: 0px;
 		width: 650px;
 		height: 396px;
+	}
+	#adsr {
+		left: 27.5%;
 	}
 	#bpm-slider {
 		top: 23%;
