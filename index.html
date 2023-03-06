@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Web drum sequencer and synthesizer">
+		<meta name="keywords" content="P5.js, P5.sound.js">
+		<meta name="author" content="Alex Townson">
 		<title>Soft Sound</title>
 		<link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 		<link rel="stylesheet" type="text/css" href="style.css">
@@ -27,13 +30,18 @@
 				</div>
 				<div id="synth-labels">
 					<h2 id="seq">SEQ</h2>
-					<h2 id="bpm">BPM</h2>
+					<label for="bpm-slider" id="bpm">BPM</label>
 					<h2 id="osc">OSC</h2>
-					<h2 id="adsr">ADSR</h2>
-					<h2 id="filter">FILTER</h2>
-					<h2 id="reverb">REVERB</h2>
-					<h2 id="delay">DELAY</h2>
-					<h2 id="amp">AMP</h2>
+					<div id="adsr">
+						<label for="attack-slider">A</label>
+						<label for="decay-slider">D</label>
+						<label for="sustain-slider">S</label>
+						<label for="release-slider">R</label>
+					</div>
+					<label for="filter-slider" id="filter">FILTER</label>
+					<label for="reverb-slider" id="reverb">REVERB</label>
+					<label for="delay-slider" id="delay">DELAY</label>
+					<label for="amp-slider" id="amp">AMP</label>
 				</div>
 				<div id="key-labels">
 					<p id="black-keys">
