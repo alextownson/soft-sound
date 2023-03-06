@@ -4,14 +4,14 @@ import keySketch from "./modules/keyboard.js";
 let app = document.querySelector('#app');
 
 window.addEventListener('load', () => {
-    document.querySelector('#loader').style.height = window.innerHeight + 'px';
-    setTimeout(function(){ 
-        document.querySelector('#loader').style.opacity = 0;
-        document.querySelector('#synth').style.opacity = 1;
-    }, 5000);
-    setTimeout(function(){ 
-        document.querySelector('#loader').remove();
-    }, 6000);
+    // document.querySelector('#loader').style.height = window.innerHeight + 'px';
+    // setTimeout(function(){ 
+    //     document.querySelector('#loader').style.opacity = 0;
+    //     document.querySelector('#synth').style.opacity = 1;
+    // }, 5000);
+    // setTimeout(function(){ 
+    //     document.querySelector('#loader').remove();
+    // }, 6000);
     app.style.width = window.innerWidth + 'px';
     app.style.height = window.innerHeight + 'px';
 })
