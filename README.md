@@ -17,6 +17,10 @@ By using P5.js Instance Mode, I was able to create multiple sketches. In v1.0 of
 
 In v2.0 of Soft Sound, I wanted to create something original, without following a tutorial or documentation example. I have gotten rid of the oscillator touch pad and noise generator. I added a keyboard with touch/key input and sliders for ADSR, a low pass filter, reverb, delay, volume and tempo. 
 
+## Mobile Issue 
+
+As of right now, the synth is not able to play sounds properly on mobile. This may be due to the way I have written the keyboard functionality. I am attempting a rewrite using a p5 sound poly synth to see if this fixes the issue. 
+
 ## Design 
 
 The inspiration for the design of the synth came from vintage record players and new vintage motorcycles. 
@@ -28,7 +32,3 @@ The inspiration for the design of the synth came from vintage record players and
 [Suzuki TU250X Motorcycle](https://mtrracing.net/Motorcycles-Suzuki-TU250X-2019-Woonsocket-RI-b2c6b4e1-ecee-4cae-b442-a96e00844516)
 
 I wanted to create a retro-esque design because I learned about vintage analog synthesizers to create the controls. I chose the font [Filson Soft](https://fonts.adobe.com/fonts/filson) because I wanted something rounded to match the rounded look of the synth.
-
-## v2.1
-
-1. v2.0 of Soft Sound works on various desktop screen sizes however a huge oversight of mine was that it does not scale correctly for tablet/mobile. In my next release, I intend to correct the layout so that it can be used on mobile, tablet, and desktop.   
