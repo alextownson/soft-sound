@@ -11422,6 +11422,12 @@ function (_AudioVoice) {
 
 
   monosynth_createClass(MonoSynth, [{
+    key: "setOscType",
+    value: function setOscType(type) {
+      this.oscillator.setType(type)
+    }
+  }, 
+  { 
     key: "play",
     value: function play(note, velocity, secondsFromNow, susTime) {
       this.triggerAttack(note, velocity, ~~secondsFromNow);
@@ -11838,7 +11844,16 @@ function () {
      *  </code></div>
      */
 
-  }, {
+  }, 
+  {
+    key: "setOscType",
+    value: function setOscType(type) {
+      this.audiovoices.forEach((voice) => {
+        voice.setOscType(type);
+      });
+    }
+  },
+  {
     key: "play",
     value: function play(note, velocity, secondsFromNow) {
       var susTime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
