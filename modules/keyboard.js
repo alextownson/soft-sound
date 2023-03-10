@@ -1,27 +1,15 @@
 // Keyboard synth:
 const keySketch = (sketch) => {
 
-    let cnv;
+    let cnv, width, height;
     let polySynth;
-    let vel = 0.5;
     let attackSlide, decaySlide, sustainSlide, releaseSlide, LPSlide, verbSlide, delSlide, ampSlide;
+    let sineBut, triBut, sawBut, squareBut;
     let attack, decay, sustain, release;
-    let verb = [];
-    let delay = [];
     let white = [];
-    let whiteNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A5', 'B5', 'C5', 'D5', 'E5'];
-    let blackNotes = [null, 'C#4', 'D#4', null, 'F#4', 'G#4', 'A#5', null, 'C#5', 'D#5'];
     let black = [];
-    let LPFilter = [];
-    let freq;
-    let verbWet;
-    let delWet;
-    let vol;
-    let width;
-    let height;
     let cellWidth = width/10;
-    let rowClicked;
-    let indexClicked;
+    let rowClicked, indexClicked;
   
     sketch.preload = () => {
       width = 994;
@@ -56,34 +44,50 @@ const keySketch = (sketch) => {
       attackSlide = sketch.createSlider(0, 5.0, 0.1, 0.1).addClass('slider').id('attack-slider').parent('controls');
       decaySlide = sketch.createSlider(0, 5.0, 0.1, 0.1).addClass('slider').id('decay-slider').parent('controls');
       sustainSlide = sketch.createSlider(0, 1.0, 0.1, 0.1).addClass('slider').id('sustain-slider').parent('controls');
-      releaseSlide = sketch.createSlider(0, 10.0, 0.1, 0.1).addClass('slider').id('release-slider').parent('controls');
-      LPSlide = sketch.createSlider(0, 2500, 2500, 50).addClass('slider').id('filter-slider').parent('controls');
+      releaseSlide = sketch.createSlider(0, 5.0, 0.1, 0.1).addClass('slider').id('release-slider').parent('controls');
+      LPSlide = sketch.createSlider(0, 5000, 5000, 100).addClass('slider').id('filter-slider').parent('controls');
       verbSlide = sketch.createSlider(0, 1, 0, 0.1).addClass('slider').id('reverb-slider').parent('controls');
       delSlide = sketch.createSlider(0, 1, 0, 0.1).addClass('slider').id('delay-slider').parent('controls');
       ampSlide = sketch.createSlider(0, 1, 1, 0.1).addClass('slider').id('amp-slider').parent('controls');
 
+      // Create buttons
+      sineBut = sketch.createButton('SINE').id('sine').parent('osc-buttons').style('background-color','#f28952').mousePressed(() => { 
+        polySynth.setOscType('sine');
+        sineBut.style('background-color', '#f28952')
+        triBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        sawBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+      })
 
+      triBut = sketch.createButton('TRI').id('triangle').parent('osc-buttons').mousePressed(() => {
+        polySynth.setOscType('triangle');
+        sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        triBut.style('background-color', '#f28952')
+        sawBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+      })
+
+      sawBut = sketch.createButton('SAW').id('saw').parent('osc-buttons').mousePressed(() => {
+        polySynth.setOscType('sawtooth');
+        sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        triBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        sawBut.style('background-color', '#f28952')
+        squareBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+     })
+
+      squareBut = sketch.createButton('SQR').id('square').parent('osc-buttons').mousePressed(() => {
+        polySynth.setOscType('square');
+        sineBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        triBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        sawBut.style('background-color', 'rgba(245, 223, 109, 0.7)')
+        squareBut.style('background-color', '#f28952')
+     })
 
       polySynth = new p5.PolySynth();
+      polySynth.setOscType('sine')
       polySynth.setADSR(0.1, 0.1, 0.1, 0.1);
       
       sketch.drawKeys();
-      // Create sounds, filters, effects
-      // for (var j = 0; j < 17; j++) {
-      //   env.push(new p5.Env());
-      //   env[j].setADSR(0.1, 0.1, 0.1, 0.1);
-      //   env[j].setRange(1, 0);
-      //   osc.push(new p5.Oscillator());
-      //   osc[j].amp(env[j]);
-      //   LPFilter.push(new p5.LowPass());  
-      //   LPFilter[j].set(2500, 1);
-      //   verb.push(new p5.Reverb());
-      //   verb[j].process(LPFilter[j], 5, 2);
-      //   verb[j].amp(0);
-      //   delay.push(new p5.Delay());
-      //   delay[j].process(LPFilter[j], 0.75, 0.5);
-      //   delay[j].amp(0);
-      // }
     };
   
     sketch.drawKeys = () => {
@@ -121,21 +125,9 @@ const keySketch = (sketch) => {
         decay = decaySlide.value();
         sustain = sustainSlide.value();
         release = releaseSlide.value();
-        // freq = LPSlide.value();
-        // verbWet = verbSlide.value();
-        // delWet = delSlide.value();
-        // vol = ampSlide.value();
-      
-      // Change params based on slider values
 
+      // Change params based on slider values
         polySynth.setADSR(attack, decay, sustain, release);
-      //   env[i].setRange(1.0, 0.0);
-      //   LPFilter[i].set(freq, 1);
-      //   osc[i].disconnect();
-      //   osc[i].connect(LPFilter[i]);
-      //   verb[i].amp(verbWet);
-      //   delay[i].amp(delWet); 
-      //   LPFilter[i].amp(vol);
 
       
     };
@@ -162,55 +154,55 @@ const keySketch = (sketch) => {
   
       // Play osc and change colour; dependant on location of click
       if (indexClicked >= 0 && indexClicked <= 3 && rowClicked === 1 || indexClicked >= 1 && indexClicked <= 2 && rowClicked === 0) {
-        polySynth.play('C4', vel)
+        polySynth.play('C4')
         white[0] = 1;
       } else if (indexClicked >=3 && indexClicked <=4 && rowClicked === 0){
-        polySynth.play('C#4', vel)
+        polySynth.play('C#4')
         black[1] = 1;
       } else if (indexClicked >=4 && indexClicked <=7 && rowClicked === 1 || indexClicked >=5 && indexClicked <=6 && rowClicked === 0){
-        polySynth.play('D4', vel)
+        polySynth.play('D4')
         white[1] = 1;
       }else if(indexClicked >=7 && indexClicked <=8 && rowClicked === 0){
-        polySynth.play('D#4', vel)
+        polySynth.play('D#4')
         black[2] = 1;
       } else if(indexClicked >=8 && indexClicked <=11 && rowClicked === 1 || indexClicked >=9 && indexClicked <=11 && rowClicked === 0){
-        polySynth.play('E4', vel)
+        polySynth.play('E4')
         white[2] = 1;
       } else if(indexClicked >=12 && indexClicked <=15 && rowClicked === 1 || indexClicked >=12 && indexClicked <=14 && rowClicked === 0){
-        polySynth.play('F4', vel)
+        polySynth.play('F4')
         white[3] = 1;
       }else if(indexClicked >=15 && indexClicked <=16 && rowClicked === 0){
-        polySynth.play('F#4', vel)
+        polySynth.play('F#4')
         black[4] = 1;
       } else if(indexClicked >=16 && indexClicked <=19 && rowClicked === 1 || indexClicked >=17 && indexClicked <=18 && rowClicked === 0){
-        polySynth.play('G4', vel)
+        polySynth.play('G4')
         white[4] = 1;
       }else if(indexClicked >=19 && indexClicked <=20 && rowClicked === 0){
-        polySynth.play('G#4', vel)
+        polySynth.play('G#4')
         black[5] = 1;
       }else if(indexClicked >=20 && indexClicked <=23 && rowClicked === 1 || indexClicked >=21 && indexClicked <=22 && rowClicked === 0){
-        polySynth.play('A5', vel)
+        polySynth.play('A5')
         white[5] = 1;
       }else if(indexClicked >=23 && indexClicked <=24 && rowClicked === 0){
-        polySynth.play('A#5', vel)
+        polySynth.play('A#5')
         black[6] = 1;
       }else if(indexClicked >=24 && indexClicked <=27 && rowClicked === 1 || indexClicked >=25 && indexClicked <=27 && rowClicked === 0){
-        polySynth.play('B5', vel)
+        polySynth.play('B5')
         white[6] = 1;
       }else if(indexClicked >=28 && indexClicked <=31 && rowClicked === 1 || indexClicked >=28 && indexClicked <=30 && rowClicked === 0){
-        polySynth.play('C5', vel)
+        polySynth.play('C5')
         white[7] = 1;
       }else if(indexClicked >=31 && indexClicked <=32 && rowClicked === 0){
-        polySynth.play('C#5', vel)
+        polySynth.play('C#5')
         black[8] = 1;
       }else if(indexClicked >=32 && indexClicked <=35 && rowClicked === 1 || indexClicked >=33 && indexClicked <=34 && rowClicked === 0){
-        polySynth.play('D5', vel)
+        polySynth.play('D5')
         white[8] = 1;
       }else if(indexClicked >=35 && indexClicked <=36 && rowClicked === 0){
-        polySynth.play('D#5', vel)
+        polySynth.play('D#5')
         black[9] = 1;
       }else if(indexClicked >=36 && indexClicked <=39 && rowClicked === 1 || indexClicked >=37 && indexClicked <=38 && rowClicked === 0){
-        polySynth.play('E5', vel)
+        polySynth.play('E5')
         white[9] = 1;
       }
       sketch.drawKeys();
@@ -219,55 +211,55 @@ const keySketch = (sketch) => {
     sketch.keyPressed = () => { 
       sketch.userStartAudio();
       if (sketch.keyCode === 65) {
-        polySynth.play('C4', vel)
+        polySynth.play('C4')
         white[0] = 1;
       } else if (sketch.keyCode === 87){
-        polySynth.play('C#4', vel)
+        polySynth.play('C#4')
         black[1] = 1;
       } else if (sketch.keyCode === 83){
-        polySynth.play('D4', vel)
+        polySynth.play('D4')
         white[1] = 1;
       } else if (sketch.keyCode === 69){
-        polySynth.play('D#4', vel)
+        polySynth.play('D#4')
         black[2] = 1;
       } else if (sketch.keyCode === 68){
-        polySynth.play('E4', vel)
+        polySynth.play('E4')
         white[2] = 1;
       } else if (sketch.keyCode === 70){
-        polySynth.play('F4', vel)
+        polySynth.play('F4')
         white[3] = 1;
       }else if (sketch.keyCode === 84){
-        polySynth.play('F#4', vel)
+        polySynth.play('F#4')
         black[4] = 1;
       } else if (sketch.keyCode === 71){
-        polySynth.play('G4', vel)
+        polySynth.play('G4')
         white[4] = 1;
       }else if (sketch.keyCode === 89){
-        polySynth.play('G#4', vel)
+        polySynth.play('G#4')
         black[5] = 1;
       }else if (sketch.keyCode === 72){
-        polySynth.play('A5', vel)
+        polySynth.play('A5')
         white[5] = 1;
       }else if (sketch.keyCode === 85){
-        polySynth.play('A#5', vel)
+        polySynth.play('A#5')
         black[6] = 1;
       }else if (sketch.keyCode === 74){
-        polySynth.play('B5', vel)
+        polySynth.play('B5')
         white[6] = 1;
       }else if (sketch.keyCode === 75){
-        polySynth.play('C5', vel)
+        polySynth.play('C5')
         white[7] = 1;
       }else if (sketch.keyCode === 79){
-        polySynth.play('C#5', vel)
+        polySynth.play('C#5')
         black[8] = 1;
       }else if (sketch.keyCode === 76){
-        polySynth.play('D5', vel)
+        polySynth.play('D5')
         white[8] = 1;
       }else if (sketch.keyCode === 80){
-        polySynth.play('D#5', vel)
+        polySynth.play('D#5')
         black[9] = 1;
       }else if (sketch.keyCode === 186){
-        polySynth.play('E5', vel)
+        polySynth.play('E5')
         white[9] = 1;
       }
       sketch.drawKeys();
