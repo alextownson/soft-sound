@@ -11802,7 +11802,15 @@ function () {
         this.audiovoices[i].connect(this.output);
       }
     }
-    /**
+  }, 
+  {
+    key: "setOscType",
+    value: function setOscType(type) {
+      this.audiovoices.forEach(function (voice) {
+      voice.setOscType(type);
+    });
+    }
+        /**
      *  Play a note by triggering noteAttack and noteRelease with sustain time
      *
      *  @method  play
@@ -11843,15 +11851,6 @@ function () {
      *  }
      *  </code></div>
      */
-
-  }, 
-  {
-    key: "setOscType",
-    value: function setOscType(type) {
-      this.audiovoices.forEach((voice) => {
-        voice.setOscType(type);
-      });
-    }
   },
   {
     key: "play",
@@ -11968,7 +11967,7 @@ function () {
 
       var note = noteToFreq(_note);
       var velocity = _velocity || 0.1;
-      var currentVoice; 
+      var currentVoice, oldestNote; 
 
       if (this.notes[note] && this.notes[note].getValueAtTime(acTime) !== null) {
         this.noteRelease(note, 0);
