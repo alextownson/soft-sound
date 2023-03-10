@@ -11288,7 +11288,6 @@ function (_AudioVoice) {
 
   function MonoSynth() {
     var _this;
-
     monosynth_classCallCheck(this, MonoSynth);
 
     _this = monosynth_possibleConstructorReturn(this, monosynth_getPrototypeOf(MonoSynth).call(this));
@@ -11844,7 +11843,7 @@ function () {
     value: function play(note, velocity, secondsFromNow) {
       var susTime = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
       this.noteAttack(note, velocity, secondsFromNow);
-      this.noteRelease(note, secondsFromNow + susTime);
+      this.noteRelease(note, ~~secondsFromNow + susTime);
     }
     /**
      *  noteADSR sets the envelope for a specific note that has just been triggered.

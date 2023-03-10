@@ -3,10 +3,9 @@ const keySketch = (sketch) => {
 
     let cnv;
     let polySynth;
-    let vel = 0.5 ;
+    let vel = 0.5;
     let attackSlide, decaySlide, sustainSlide, releaseSlide, LPSlide, verbSlide, delSlide, ampSlide;
     let attack, decay, sustain, release;
-    let env = [];
     let verb = [];
     let delay = [];
     let white = [];
@@ -57,7 +56,7 @@ const keySketch = (sketch) => {
       attackSlide = sketch.createSlider(0, 5.0, 0.1, 0.1).addClass('slider').id('attack-slider').parent('controls');
       decaySlide = sketch.createSlider(0, 5.0, 0.1, 0.1).addClass('slider').id('decay-slider').parent('controls');
       sustainSlide = sketch.createSlider(0, 1.0, 0.1, 0.1).addClass('slider').id('sustain-slider').parent('controls');
-      releaseSlide = sketch.createSlider(0, 5.0, 0.1, 0.1).addClass('slider').id('release-slider').parent('controls');
+      releaseSlide = sketch.createSlider(0, 10.0, 0.1, 0.1).addClass('slider').id('release-slider').parent('controls');
       LPSlide = sketch.createSlider(0, 2500, 2500, 50).addClass('slider').id('filter-slider').parent('controls');
       verbSlide = sketch.createSlider(0, 1, 0, 0.1).addClass('slider').id('reverb-slider').parent('controls');
       delSlide = sketch.createSlider(0, 1, 0, 0.1).addClass('slider').id('delay-slider').parent('controls');
@@ -66,8 +65,8 @@ const keySketch = (sketch) => {
 
 
       polySynth = new p5.PolySynth();
-      polySynth.setADSR(0.1, 0.1, 0.1, 0.1)
-  
+      polySynth.setADSR(0.1, 0.1, 0.1, 0.1);
+      
       sketch.drawKeys();
       // Create sounds, filters, effects
       // for (var j = 0; j < 17; j++) {
@@ -163,7 +162,7 @@ const keySketch = (sketch) => {
   
       // Play osc and change colour; dependant on location of click
       if (indexClicked >= 0 && indexClicked <= 3 && rowClicked === 1 || indexClicked >= 1 && indexClicked <= 2 && rowClicked === 0) {
-        polySynth.play('C4')
+        polySynth.play('C4', vel)
         white[0] = 1;
       } else if (indexClicked >=3 && indexClicked <=4 && rowClicked === 0){
         polySynth.play('C#4', vel)
@@ -280,10 +279,10 @@ const keySketch = (sketch) => {
       for (var j = 0; j < 10; j++){
         if (white[j] === 1) {
           white[j]= 0;
-          polySynth.noteRelease(whiteNotes[j]);
+          // polySynth.noteRelease(whiteNotes[j]);
         } else if (black[j] === 1){ 
           black[j]= 0;
-          polySynth.noteRelease(blackNotes[j]);
+          // polySynth.noteRelease(blackNotes[j]);
       }
     }
     sketch.drawKeys();
@@ -297,7 +296,7 @@ const keySketch = (sketch) => {
           // polySynth.noteRelease(whiteNotes[j], release);
         } else if (black[j] === 1){ 
           black[j]= 0;
-          polySynth.noteRelease(blackNotes[j], release);
+          // polySynth.noteRelease(blackNotes[j], release);
         }
       }
     sketch.drawKeys();
