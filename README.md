@@ -27,8 +27,4 @@ The inspiration for the design of the synth came from vintage record players and
 
 ![Retro Japanese portable record players and Suzuki TU250X motorcycle](assets/readme/ATownson_PhaseOne_Page_4.png)
 
-[Japanese Portable Record Players](https://www.spoon-tamago.com/2016/07/21/an-exhibition-of-japanese-portable-record-players/)
-
-[Suzuki TU250X Motorcycle](https://mtrracing.net/Motorcycles-Suzuki-TU250X-2019-Woonsocket-RI-b2c6b4e1-ecee-4cae-b442-a96e00844516)
-
 I wanted to create a retro-esque design because I learned about vintage analog synthesizers to create the controls. I chose the font [Filson Soft](https://fonts.adobe.com/fonts/filson) because I wanted something rounded to match the rounded look of the synth.
